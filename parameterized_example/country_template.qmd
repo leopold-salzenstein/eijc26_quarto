@@ -1,0 +1,56 @@
+---
+title: "NOX emitters in `r params$country`"
+author: "Leopold Salzenstein"
+date: "Saturday May 30, 2026"
+execute:
+    echo: false
+    warning: false
+format: html
+params:
+  country: "Belgium"
+---
+
+```{r}
+# | echo: false
+library(tidyverse)
+library(here)
+
+nox_emissions <- read_csv(here("parameterized_example", "NOX_2023.csv"))
+```
+
+## Top 10 facilities emitting NOX in `r params$country` in 2023
+
+```{r}
+nox_emissions |>
+  filter(country == params$country) |>
+  arrange(desc(total_emissions)) |>
+  head(10) |>
+  ggplot(aes(
+    x = fct_reorder(facility, total_emissions),
+    y = total_emissions
+  )) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(
+    x = NULL,
+    y = "NOX emissions (kg)",
+    title = str_glue("Top NOX emitting facilities")
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+
+```{r}
+top_facility <- nox_emissions |>
+  filter(country == params$country) |>
+  arrange(desc(total_emissions)) |>
+  head(1) |>
+  select(facility, city, total_emissions)
+```
+
+The most NOX emitting facility in `r params$country` is `r top_facility$facility`, located in `r top_facility$city`. In 2023, it emitted approximately `r format(round(top_facility$total_emissions), big.mark=" ")` kg of NOX in the atmosphere.

@@ -1,0 +1,43 @@
+---
+title: "A simple yet cool Quarto file"
+author: "Leo"
+date: "Saturday May 30, 2026"
+execute:
+    echo: false
+    warning: false
+format: html
+---
+
+```{r}
+# | echo: false
+library(tidyverse)
+
+cool_data <- tibble(
+  cool_things = c(
+    rep("Quarto", 8),
+    rep("R", 6),
+    rep("Python", 6),
+    rep("Markdown", 5),
+    rep("SQL", 4)
+  )
+)
+```
+
+## A cool barplot 
+
+```{r}
+cool_data |>
+  ggplot(aes(y = fct_infreq(cool_things) |> fct_rev())) +
+  geom_bar(fill = "violet") +
+  labs(
+    x = "Scale of cool",
+    y = NULL,
+    title = "Cool things in this presentation"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```

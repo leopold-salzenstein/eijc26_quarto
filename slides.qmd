@@ -1,0 +1,353 @@
+---
+title: "One template, many stories"
+subtitle: "Parameterized reports with ![](https://quarto.org/quarto.png){.quarto-logo}"
+author: "Leopold Salzenstein"
+date: "Saturday May 30, 2026"
+engine: knitr
+format:
+  revealjs: 
+    theme: [solarized, custom.scss]
+    include-after-body: header-links.html
+---
+
+# Problem n°1:
+
+<br>
+
+![[Image from "Enough Markdown to Write a Thesis" by Richard J. Telford (2025)]{style="font-size:0.5em"}](images/non_reproducible_workflow.png){fig-align="center"}
+
+## Solution: Quarto
+
+<br><br>
+
+![[Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio::Conf(2022). Illustrated by Allison Horst.]{style="font-size:0.5em"}](images/horst-quarto-schematic.png){fig-align="center"}
+
+## Quarto rendering {.unlisted}
+
+<br><br>
+
+![[Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio::Conf(2022). Illustrated by Allison Horst.]{style="font-size:0.5em"}](images/horst-qmd-render-schema.png){fig-align="center"}
+
+## a simple quarto (.qmd) file
+
+<br>
+
+````{.yaml code-line-numbers="|2-3|6|8-12"}
+---
+title: "A simple yet cool Quarto file"
+author: "Leo"
+---
+
+## A cool barplot 
+
+`r ''````{r}
+cool_data |>
+  ggplot(aes(x = cool_variable)) +
+  geom_bar()
+```
+````
+<br>
+
+**Ingredients of a Quarto file:** 
+
+1. YAML header
+
+2. Markdown language
+
+3. Code chunks (R, Python, SQL, Bash, Julia, etc.)
+
+## A small detour: Markdown 101
+
+<br>
+
+:::{.columns}
+:::{.column width="40%" .fragment fragment-index=1}
+```markdown
+# Big Title
+## Title
+### Sub-title
+#### Sub-sub-title
+```
+:::
+:::{.column width="10%" .fragment fragment-index=1}
+:::
+:::{.column width="50%" .fragment fragment-index=2 style="font-size:0.5em;"}
+<h1>Big Title</h1>
+<h2>Title</h2>
+### Sub-title
+#### Sub-sub-title
+:::
+:::
+
+<br>
+
+:::{.columns}
+:::{.column width="40%" .fragment fragment-index=3}
+```markdown
+normal
+
+**bold**
+
+*italic*
+
+***bold & italic***
+
+~~strikethrough~~
+
+> a quote
+
+`a code chunk`
+```
+:::
+:::{.column width="10%" .fragment fragment-index=3}
+:::
+:::{.column width="50%" .fragment fragment-index=4 style="font-size:0.7em;"}
+normal
+
+**bold**
+
+*italic*
+
+***bold & italic***
+
+~~strikethrough~~
+
+> a quote
+
+`a code chunk`
+:::
+:::
+
+## Set `format` in YAML header
+
+<br>
+
+````{.yaml code-line-numbers="4"}
+---
+title: "A simple yet cool Quarto file"
+author: "Leo"
+format: html
+---
+
+## A cool barplot 
+
+`r ''````{r}
+cool_data |>
+  ggplot(aes(y = fct_infreq(cool_things) |> fct_rev())) +
+  geom_bar(fill = "violet") +
+  labs(
+    x = "Scale of cool",
+    y = NULL,
+    title = "Cool things in this presentation"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+```
+````
+
+## a simple quarto (.qmd) file in HTML
+
+````{.yaml code-line-numbers="4"}
+---
+title: "A simple yet cool Quarto file"
+author: "Leo"
+format: html
+---
+````
+
+![](images/simple_example_html.png){fig-align="center" width="1300"}
+
+## a simple quarto (.qmd) file in PDF
+
+````{.yaml code-line-numbers="4"}
+---
+title: "A simple yet cool Quarto file"
+author: "Leo"
+format: pdf
+---
+````
+
+![](images/simple_example_pdf.png){fig-align="center" width="1300"}
+
+## a simple quarto (.qmd) file in DOCX
+
+````{.yaml code-line-numbers="4"}
+---
+title: "A simple yet cool Quarto file"
+author: "Leo"
+format: docx
+---
+````
+
+![](images/simple_example_docx.png){fig-align="center" width="1300"}
+
+## a simple quarto (.qmd) file in EPUB
+
+````{.yaml code-line-numbers="4"}
+---
+title: "A simple yet cool Quarto file"
+author: "Leo"
+format: epub
+---
+````
+
+![](images/simple_example_epub.png){fig-align="center" width="1300"}
+
+## This presentation is a quarto file (in Reveal.js)
+
+<br>
+
+````{.yaml code-line-numbers="7-10"}
+---
+title: "One template, many stories"
+subtitle: "Parameterized reports with ![](https://quarto.org/quarto.png){.quarto-logo}"
+author: "Leopold Salzenstein"
+date: "Saturday May 30, 2026"
+engine: knitr
+format:
+  revealjs: 
+    theme: [solarized, custom.scss]
+    include-after-body: header-links.html
+---
+````
+
+## Where we are now
+
+<br>
+
+![[Image from "Enough Markdown to Write a Thesis" by Richard J. Telford (2025)]{style="font-size:0.5em"}](images/reproducible_workflow.png){fig-align="center"}
+
+## Mid-presentation conclusion: Quarto is cool 
+
+:::{.r-stack}
+![[Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst.]{style="font-size:0.5em"}](images/quarto_is_cool.jpeg){fig-align="center"}
+:::
+
+# Problem n°2:
+
+<br>
+
+![[Image from the "R Productive Workflow" by Yan Holtz]{style="font-size:0.5em"}](images/repetitive_workflow.png){fig-align="center"}
+
+## Solution: Parameterized reports in Quarto
+
+##
+
+:::{.r-stack}
+![](images/template1.png){.fragment width="1300" fig-align="left" style="margin-top:-1em"}
+
+![](images/template2.png){.fragment width="1300" fig-align="left" style="margin-top:-1em"}
+
+![](images/template3.png){.fragment width="1300" fig-align="left" style="margin-top:-1em"}
+:::
+
+## Example: Nitrogen oxides (NOX) emissions
+
+<br>
+
+![](images/ied_eprtr.png){fig-align="center"}
+
+<br>
+
+.. in Belgium and its neighbours (NL, DE, FR, LU)
+
+## Step 1: make template analysis
+
+<br>
+
+`````{.yaml code-line-numbers="|1|5"}
+## Top 10 facilities emitting NOX in ``r ''`r params$country` in 2023
+
+`r ''````{r}
+nox_emissions |>
+  filter(country == params$country) |>
+  arrange(desc(total_emissions)) |>
+  head(10) |>
+  ggplot(aes(
+    x = fct_reorder(facility, total_emissions),
+    y = total_emissions
+  )) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(
+    x = NULL,
+    y = "NOX emissions (kg)",
+    title = str_glue("Top NOX emitting facilities")
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+````
+`````
+## Step 1: make template analysis
+
+<br>
+
+`````{.yaml code-line-numbers=""}
+`r ''````{r}
+top_facility <- nox_emissions |>
+  filter(country == params$country) |>
+  arrange(desc(total_emissions)) |>
+  head(1) |>
+  select(facility, city, total_emissions)
+    )
+````
+`````
+<br>
+
+`````{.yaml code-line-numbers=""}
+``r ''`r top_facility$facility` is the facility that emitted most NOX in 
+``r ''`r params$country` in 2023. 
+
+It is located in ``r ''`r top_facility$city`. 
+
+In 2023, it emitted approximately 
+``r ''`r format(round(top_facility$total_emissions), big.mark=" ")` 
+kg of NOX in the atmosphere.
+`````
+
+
+
+## Step 2: Set `params` in YAML header
+
+<br>
+
+```{.yaml code-line-numbers="2|3-5|6-8|11"}
+---
+title: "Swiss Cats"
+format:
+  html: default
+  docx: default
+params:
+  fave_breed: "Snowshoe"
+---
+
+Report content goes here.
+```
+
+## Step 3: render the reports
+
+## Where we are now
+
+<br>
+
+![[Image from the "R Productive Workflow" by Yan Holtz]{style="font-size:0.5em"}](images/non_repetitive_workflow.png){fig-align="center"}
+
+## Questions? 
+
+:::{.r-stack}
+![[Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst.]{style="font-size:0.5em"}](images/quarto_end.jpeg){fig-align="center"}
+:::
+
+<br>
+
+:::{.r-stack}
+email me @ [leo@journalismarena.eu](leo@journalismarena.eu)
+:::
