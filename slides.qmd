@@ -10,6 +10,12 @@ format:
     include-after-body: header-links.html
 ---
 
+## {.center}
+
+::: {.center}
+**[https://shorturl.at/sTVrH](https://leopold-salzenstein.github.io/eijc26_quarto){style="font-size:1.5em"}**
+::: 
+
 # Problem n°1:
 
 <br>
