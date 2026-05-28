@@ -659,5 +659,5 @@ params:
 :::
 
 :::{.r-stack}
-email me @ [leo@journalismarena.eu](leo@journalismarena.eu)
+[[leo@journalismarena.eu](leo@journalismarena.eu)  /  [https://github.com/leopold-salzenstein/eijc26_quarto](https://github.com/leopold-salzenstein/eijc26_quarto)]{style="font-size:0.7em"}
 :::
