@@ -5,9 +5,11 @@ date: "Saturday May 30, 2026"
 execute:
     echo: false
     warning: false
-format: html
+format:
+  html:
+    embed-resources: true
 params:
-  country: "Belgium"
+  country: "France"
 ---
 
 ```{r}
@@ -23,10 +25,12 @@ nox_emissions <- read_csv(here("parameterized_example", "NOX_2023.csv"))
 ```{r}
 nox_emissions |>
   filter(country == params$country) |>
-  arrange(desc(total_emissions)) |>
-  head(10) |>
+  summarise(total_emissions = sum(total_emissions, na.rm = TRUE),
+            .by = c(facility, city)) |>
+  slice_max(total_emissions, n = 10) |>
+  mutate(facility_label = str_glue("{facility} ({city})")) |>
   ggplot(aes(
-    x = fct_reorder(facility, total_emissions),
+    x = fct_reorder(facility_label, total_emissions),
     y = total_emissions
   )) +
   geom_col(fill = "darkgreen") +
@@ -34,7 +38,7 @@ nox_emissions |>
   labs(
     x = NULL,
     y = "NOX emissions (kg)",
-    title = str_glue("Top NOX emitting facilities")
+    title = "Top NOX emitting facilities"
   ) +
   theme_minimal() +
   theme(
