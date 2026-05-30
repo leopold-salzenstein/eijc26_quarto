@@ -397,13 +397,12 @@ top_facility <- nox_emissions |>
   arrange(desc(total_emissions)) |>
   head(1) |>
   select(facility, city, total_emissions)
-    )
 ````
 `````
 
 <br>
 
-For inline code, enclose the expression in `` `r ` ``.
+For inline code, enclose the expression in `` `r ` `` / `` `python ` ``.
 
 `````{.yaml code-line-numbers=""}
 ``r ''`r top_facility$facility` is the facility that emitted most NOX in 
